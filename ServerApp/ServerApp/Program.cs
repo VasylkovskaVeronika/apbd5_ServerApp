@@ -1,3 +1,7 @@
+using ServerApp.Database;
+using ServerApp.Endpoints;
+using ServerApp.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+builder.Services.AddSingleton<MockDB>();
 
 var app = builder.Build();
 
@@ -15,22 +20,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 //Minimal API
-//get
-app.MapGet("/animals-minimalapi/{id}", (int id) =>
-{
-    if (id != 1)
-    {
-        return Results.NotFound();
-    }
-    //proceed data
-    return Results.Ok("I've got animals!"); //status code 200
-});
-//status codes 201-created, 400-bad request. More the tutor send on Teams
-//post
-app.MapPost("/animals", () =>
-{
-    //proceed data
-});
+app.MapAnimalsEndpoints();
 //Controllers
 
 app.UseHttpsRedirection();
@@ -61,3 +51,4 @@ record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
+

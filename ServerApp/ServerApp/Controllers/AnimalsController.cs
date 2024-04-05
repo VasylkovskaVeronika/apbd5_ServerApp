@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ServerApp.Database;
 
 namespace ServerApp.Controllers;
 
@@ -9,6 +10,7 @@ public class AnimalsController: ControllerBase
     [HttpGet]
     public IActionResult GetAnimals()
     {
-        return Ok();
+        var animals = new MockDB().Animals;
+        return Ok(animals);
     }
 }
