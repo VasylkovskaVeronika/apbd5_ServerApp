@@ -20,10 +20,10 @@ app.MapGet("/animals-minimalapi/{id}", (int id) =>
 {
     if (id != 1)
     {
-        Results.
+        return Results.NotFound();
     }
     //proceed data
-    Results.Ok("I've got animals!"); //status code 200
+    return Results.Ok("I've got animals!"); //status code 200
 });
 //status codes 201-created, 400-bad request. More the tutor send on Teams
 //post
