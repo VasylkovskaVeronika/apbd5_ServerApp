@@ -5,9 +5,11 @@ namespace ServerApp.Database;
 public class MockDB
 {
     public List<Animal> Animals = new List<Animal>();
+    public List<Visit> Visits = new List<Visit>();
 
     public MockDB()
     {
+        Animals = new StaticData().Animals;
         
     }
 
@@ -38,5 +40,11 @@ public class MockDB
     public string deleteAnimal(Animal animal)
     {
         return Animals.Remove(animal) ? "Deleted successfully" : "No such animal in the database";
+    }
+
+    public List<Visit> relatedToAnimal(Animal a)
+    {
+        List<Visit> result = Visits.FindAll(v => v.Animal.Id == a.Id);
+        return result;
     }
 }
